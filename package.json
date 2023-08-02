@@ -1,0 +1,27 @@
+{
+  "name": "coopertino-cli",
+  "version": "1.0.0",
+  "description": "coopertino remot creat delete or update hostname also uptade ssl certificate",
+  "main": "main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node ./dist/app.js",
+    "build":"tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/renalex1/coopertino-cli.git"
+  },
+  "keywords": [
+    "coopertino",
+    "cli",
+    "create",
+    "host"
+  ],
+  "author": "Aleksandr Babayan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/renalex1/coopertino-cli/issues"
+  },
+  "homepage": "https://github.com/renalex1/coopertino-cli#readme"
+}
