@@ -5,8 +5,8 @@
   "main": "main.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node ./dist/app.js",
-    "build":"tsc"
+    "start": "node ./dist/main.js",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,11 @@
   "bugs": {
     "url": "https://github.com/renalex1/coopertino-cli/issues"
   },
-  "homepage": "https://github.com/renalex1/coopertino-cli#readme"
+  "homepage": "https://github.com/renalex1/coopertino-cli#readme",
+  "dependencies": {
+    "@types/node": "^20.4.6",
+    "ts-node": "^10.9.1",
+    "tslog": "^4.8.2",
+    "typescript": "^5.1.6"
+  }
 }
