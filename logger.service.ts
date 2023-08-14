@@ -14,18 +14,6 @@ export const isExist = async (path: string): Promise<boolean> => {
 };
 
 export const writeFile = async (path: string, data: string): Promise<boolean> => {
-  // try {
-  //   if (await isExist(dirname(path))) {
-  //     await fsPromises.appendFile(path, data);
-  //   } else {
-  //     await fsPromises.mkdir(dirname(path))
-  //     await fsPromises.writeFile(path, data);
-  //   }
-  //   return true;
-  // } catch (err) {
-  //   console.error(`Error writing to ${path} file:`, err);
-  //   return false;
-  // }
   try {
     const directory = dirname(path);
     if (!existsSync(directory)) {
