@@ -1,5 +1,5 @@
 import { Logger, ILogObj, ISettingsParam } from 'tslog'
-import { promises as fsPromises, existsSync } from 'fs';
+import { promises as fsPromises } from 'fs';
 import { join, dirname, basename } from 'path';
 
 export const rootPath = dirname(require.main!.filename)
@@ -9,35 +9,6 @@ export const isExist = async (path: string): Promise<boolean> => {
     await fsPromises.stat(path);
     return true;
   } catch (err) {
-    return false;
-  }
-};
-
-export const writeFile = async (path: string, data: string): Promise<boolean> => {
-  // try {
-  //   if (await isExist(dirname(path))) {
-  //     await fsPromises.appendFile(path, data);
-  //   } else {
-  //     await fsPromises.mkdir(dirname(path))
-  //     await fsPromises.writeFile(path, data);
-  //   }
-  //   return true;
-  // } catch (err) {
-  //   console.error(`Error writing to ${path} file:`, err);
-  //   return false;
-  // }
-  try {
-    const directory = dirname(path);
-    if (!existsSync(directory)) {
-      await fsPromises.mkdir(directory);
-      await fsPromises.writeFile(path, data, 'utf-8');
-    } else {
-      await fsPromises.appendFile(path, data, 'utf-8');
-    }
-
-    return true;
-  } catch (err) {
-    console.error(`Error writing to ${path} file:`, err);
     return false;
   }
 };
@@ -85,24 +56,42 @@ export class LoggerService {
   }
 
   private async logToFileIfEnabled(level: string, message: string) {
+    console.log(11);
+
     const dirPath = join(rootPath, dirname(this.logFilePath))
     const filePath = join(dirPath, basename(this.logFilePath))
+    console.log(this.logToFile);
+    await isExist(dirPath).then(async (info) => {
+      console.log(1);
+      console.log(info);
+      if (info === false) {
+        await fsPromises.mkdir(dirPath)
+      }
+      console.log(4);
+      console.log(filePath);
+      console.log(this.logToFile);
 
-    if (filePath && this.logToFile) {
-      const logLine = `[${new Date().toISOString()}] [${level}] ${message}\n`;
-      await writeFile(filePath, logLine)
-    }
+      if (filePath && this.logToFile) {
+
+        try {
+          const logLine = `[${new Date().toISOString()}] [${level}] ${message}\n`;
+          await fsPromises.appendFile(filePath, logLine);
+        } catch (err) {
+          console.error('Error writing to log file:', err);
+        }
+      }
+    })
   }
 
 
 
-  silly(...args: unknown[]) {
+  async silly(...args: unknown[]) {
     this.logger.silly('\n', ...args)
-    this.logToFileIfEnabled('silly', args.join(' '));
+    await this.logToFileIfEnabled('silly', args.join(' '));
   }
-  trace(...args: unknown[]) {
+  async trace(...args: unknown[]) {
     this.logger.trace('\n', ...args)
-    this.logToFileIfEnabled('trace', args.join(' '));
+    await this.logToFileIfEnabled('trace', args.join(' '));
   }
   debug(...args: unknown[]) {
     this.logger.debug('\n', ...args)
@@ -126,10 +115,15 @@ export class LoggerService {
   }
 
   public setLogToFile(logToFile: boolean, logFilePath?: string) {
+    // console.log(1);
+    // console.log(this.logToFile );
+
     if (this.logToFile !== logToFile) {
       this.logToFile = logToFile;
       this.logFilePath = logToFile ? (logFilePath ? logFilePath : '/logs/logs.log') : '';
     }
+    console.log(2);
+    // console.log(this.logToFile );
   }
 }
 
