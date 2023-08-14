@@ -1,17 +1,21 @@
-import { LoggerService } from "./logger/logger.service"
+import { LoggerService } from './logger/logger.service'
 
 
 async function start() {
 	const f = new LoggerService()
-	f.debug('debug')
-	f.log('log')
+	// f.debug('debug')
+	// f.log('log')
+	f.setLogToFile(true);
 	f.silly('silly')
 	f.trace('trace')
-	f.warn('warn')
+	f.setLogToFile(false);
+	f.setLogToFile(true, '/err/logErr.log');
 	f.error('err')
-	// f.setLogToFile(true, './logs/logfile.log');
-	f.fatal('fatal')
-	// f.setLogToFile(false);
+	f.setLogToFile(false);
+	f.setLogToFile(true, '/logs/logFile.log');
+	f.warn('warn')
+	// f.fatal('fatal')
+	f.setLogToFile(false);
 }
 
 start()
