@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "coopertino remot creat delete or update hostname also uptade ssl certificate",
   "main": "main.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "start": "node ./dist/main.js",
     "build": "tsc"
@@ -26,8 +26,12 @@
   "homepage": "https://github.com/renalex1/coopertino-cli#readme",
   "dependencies": {
     "@types/node": "^20.4.6",
+    "inquirer": "^9.2.10",
     "ts-node": "^10.9.1",
     "tslog": "^4.8.2",
     "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3"
   }
 }
