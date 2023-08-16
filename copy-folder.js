@@ -1,9 +1,3 @@
-// const fs = require('fs');
-// const  { join, dirname }  = require('path');
-// const { fileURLToPath } = require('url');
-// const rootPath = dirname(require.main.filename)
-
-
 import fs from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';

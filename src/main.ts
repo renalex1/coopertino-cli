@@ -1,8 +1,7 @@
 import { LoggerService, } from './logger/logger.service.js'
 import { isExist, createPath, writeFile } from './services/storage.service.js'
 import { language } from './services/osLang.service.js'
-import { createPromptModule, QuestionCollection } from 'inquirer';
-// import inquirer from 'inquirer';
+import { createPromptModule, QuestionCollection, } from 'inquirer';
 import { loadTranslation } from './utils/utils.js';
 interface UserInfo {
 	lang: string;
@@ -12,11 +11,8 @@ interface UserInfo {
 
 
 async function start() {
-	const translation = await loadTranslation(language);
-	console.log(translation);
-
+	let translation = await loadTranslation(language);
 	const prompt = createPromptModule();
-	// const prompt = inquirer.createPromptModule();
 
 	const f = new LoggerService()
 
@@ -24,57 +20,49 @@ async function start() {
 
 	const settingPath = createPath('store/setting.json')
 	const setting = await isExist(settingPath)
+
 	if (!setting) {
-		const questions: QuestionCollection[] = [
-			{
-				type: 'list',
-				name: 'lang',
-				message: 'Please select display language (English "en" or Russian "ru"): ',
-				choices: ['en', 'ru'],
-				default: language,
-			},
+
+		const languageResponse = await prompt({
+			type: 'list',
+			name: 'language',
+			message: translation.settings.settings_lang,
+			choices: ['en', 'ru'],
+			default: language,
+		});
+
+		if (await languageResponse.language) {
+			translation = await loadTranslation(languageResponse.language);
+		}
+		const secondQuestions: QuestionCollection[] = [
 			{
 				type: 'input',
 				name: 'username',
-				message: 'Please enter username: '
+				message: translation.settings.settings_username,
 			},
 			{
-				type: 'password',
+				type: 'input',
 				name: 'password',
-				message: 'Please enter password: '
-			}
+				message: translation.settings.settings_password,
+			},
 		];
-		// const questions = [
-		// 	{
-		// 		type: 'list',
-		// 		name: 'lang',
-		// 		message: 'Please select display language (English "en" or Russian "ru"): ',
-		// 		choices: ['en', 'ru'],
-		// 		default: language,
-		// 	},
-		// 	{
-		// 		type: 'input',
-		// 		name: 'username',
-		// 		message: 'Please enter username: ',
-		// 	},
-		// 	{
-		// 		type: 'password',
-		// 		name: 'password',
-		// 		message: 'Please enter password: ',
-		// 	},
-		// ];
-		const answers = await prompt(questions);
+
+		const answers = await prompt(secondQuestions);
 
 		const info: UserInfo = {
 			lang: answers.lang,
 			username: answers.username,
-			password: answers.password
+			password: answers.password.replace(/#/g, '%23').replace(/&/g, '%26')
+	
 		};
+
 		await writeFile(settingPath, JSON.stringify(info), true)
+
 	} else {
 		await writeFile(settingPath, '{"oo": "kkkk"}', true)
 
 	}
+
 
 	// f.debug('debug')
 	// f.log('log')

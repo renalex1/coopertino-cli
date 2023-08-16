@@ -1,0 +1,7 @@
+{
+    "settings":{
+        "settings_lang":"Пожалуйста, выберите язык отображения (английский 'en' или русский 'ru'): ",
+        "settings_username":"Пожалуйста, введите имя пользователя от https://dns.coopertino.ru:1500/: ",
+        "settings_password":"Пожалуйста введите пароль от https://dns.coopertino.ru:1500/: "
+    }
+}
