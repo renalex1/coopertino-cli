@@ -1,34 +1,8 @@
 import { Logger, ILogObj, ISettingsParam } from 'tslog'
-import { promises as fsPromises, existsSync } from 'fs';
-import { join, dirname, basename } from 'path';
+import { dirname, basename } from 'path';
+import { createPath, writeFile } from '../services/storage.service.js'
 
-export const rootPath = dirname(require.main!.filename)
 
-export const isExist = async (path: string): Promise<boolean> => {
-  try {
-    await fsPromises.stat(path);
-    return true;
-  } catch (err) {
-    return false;
-  }
-};
-
-export const writeFile = async (path: string, data: string): Promise<boolean> => {
-  try {
-    const directory = dirname(path);
-    if (!existsSync(directory)) {
-      await fsPromises.mkdir(directory);
-      await fsPromises.writeFile(path, data, 'utf-8');
-    } else {
-      await fsPromises.appendFile(path, data, 'utf-8');
-    }
-
-    return true;
-  } catch (err) {
-    console.error(`Error writing to ${path} file:`, err);
-    return false;
-  }
-};
 
 // Logger settings
 const settings = {
@@ -73,8 +47,7 @@ export class LoggerService {
   }
 
   private async logToFileIfEnabled(level: string, message: string) {
-    const dirPath = join(rootPath, dirname(this.logFilePath))
-    const filePath = join(dirPath, basename(this.logFilePath))
+    const filePath = createPath([dirname(this.logFilePath), basename(this.logFilePath)])
 
     if (filePath && this.logToFile) {
       const logLine = `[${new Date().toISOString()}] [${level}] ${message}\n`;
