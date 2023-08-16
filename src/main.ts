@@ -1,5 +1,5 @@
 import { LoggerService, } from './logger/logger.service.js'
-import { isExist, createPath, writeFile } from './services/storage.service.js'
+import { isExist, settingFilePath, writeFile, getKeyValue } from './services/storage.service.js'
 import { language } from './services/osLang.service.js'
 import { createPromptModule, QuestionCollection, } from 'inquirer';
 import { loadTranslation } from './utils/utils.js';
@@ -17,9 +17,15 @@ async function start() {
 	const f = new LoggerService()
 
 	f.log(language);
+	const i = await getKeyValue('username')
+	const ii = await getKeyValue(['username', 'password'])
+	f.log(i);
+	// f.log(i.username);
+	f.log(ii);
+	f.log(ii.username);
+	f.silly(ii.password);
 
-	const settingPath = createPath('store/setting.json')
-	const setting = await isExist(settingPath)
+	const setting = await isExist(settingFilePath)
 
 	if (!setting) {
 
@@ -53,13 +59,13 @@ async function start() {
 			lang: answers.lang,
 			username: answers.username,
 			password: answers.password.replace(/#/g, '%23').replace(/&/g, '%26')
-	
+
 		};
 
-		await writeFile(settingPath, JSON.stringify(info), true)
+		await writeFile(settingFilePath, JSON.stringify(info), true)
 
 	} else {
-		await writeFile(settingPath, '{"oo": "kkkk"}', true)
+		// await writeFile(settingFilePath, '{"oo": "kkkk"}', true)
 
 	}
 

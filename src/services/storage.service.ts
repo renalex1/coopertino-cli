@@ -2,9 +2,7 @@ import { promises as fsPromises, existsSync } from 'fs';
 import { join, dirname, } from 'path';
 import { fileURLToPath } from 'url';
 
-// const rootPath = dirname(require.main!.filename)
 const rootPath = dirname(dirname(fileURLToPath(import.meta.url)));
-
 
 export const createPath = (path: string | string[]): string => {
     if (Array.isArray(path)) {
@@ -12,6 +10,8 @@ export const createPath = (path: string | string[]): string => {
 
     } else { return join(rootPath, path) }
 }
+
+export const settingFilePath = createPath('store/setting.json')
 
 export const isExist = async (path: string): Promise<boolean> => {
     try {
@@ -41,5 +41,23 @@ export const writeFile = async (path: string, data: string, rewrite?: boolean): 
     } catch (err) {
         console.error(`Error writing to ${path} file:`, err);
         return false;
+    }
+};
+
+export const getKeyValue = async (key: string | string[]) => {
+    if (await isExist(settingFilePath)) {
+        const file = await fsPromises.readFile(settingFilePath);
+        const data = JSON.parse(file.toString()); // Parse the Buffer as a string
+        if (typeof key === 'string') {
+            return data[key];
+        } else if (Array.isArray(key)) {
+            const result: { [key: string]: any } = {};
+            for (const k of key) {
+                result[k] = data[k];
+            }
+            return result;
+        }
+    } else {
+        return undefined;
     }
 };
