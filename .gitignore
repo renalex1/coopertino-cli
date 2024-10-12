@@ -1,7 +1,9 @@
-# compiled output
+# Compiled output
 /dist
-/node_modules
 /build
+
+# Node modules
+/node_modules
 
 # Logs
 logs
@@ -11,40 +13,29 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+access.log
 
-# OS
+# OS generated files
 .DS_Store
+Thumbs.db
+ehthumbs.db
 
-# Tests
-/coverage
-/.nyc_output
+# Editor directories and files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
-
-# temp directory
+# Temporary files
 .temp
 .tmp
+*~
+
+# Backup files
+*.bak
 
 # Runtime data
 pids
@@ -52,5 +43,76 @@ pids
 *.seed
 *.pid.lock
 
-# Diagnostic reports (https://nodejs.org/api/report.html)
+# Diagnostic reports
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Coverage
+/coverage
+/.nyc_output
+lib-cov
+*.lcov
+
+# Dependency directories
+jspm_packages/
+bower_components/
+
+# TypeScript
+*.tsbuildinfo
+typings/
+
+# Cache
+.npm
+.eslintcache
+.stylelintcache
+.cache
+.parcel-cache
+
+# Serverless directories
+.serverless/
+
+# Miscellaneous
+/uploads_Copy/
+users/
+backup/
+deasoft/
+front-end/
+materialize-html-admin-template/
+*.zip
+*.tar.gz
+*.rar
+*.7zip
+
+# Environment files
+.env*
+!.env.example
+
+# Package lock files
+package-lock.json
+yarn.lock
+
+# Ignore additional files and directories
+*.tgz
+*.coverage
+*.coveragexml
+*.code-workspace
+.history
+.ionide
+
+# Ignore IDE-specific configurations
+*.iml
+*.ipr
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/contentModel.xml
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+.idea/**/gradle.xml
+.idea/**/libraries
