@@ -7,13 +7,13 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "outDir": "./dist",    
-    "rootDir": "./src",  
+    "outDir": "./dist",
+    "rootDir": "./src",
     "skipLibCheck": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts", "src/i18n/**/*.json"], 
+  "include": ["src/**/*.ts", "src/i18n/**/*.json"],
   "exclude": ["node_modules"]
 }

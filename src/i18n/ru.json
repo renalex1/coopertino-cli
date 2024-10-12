@@ -1,4 +1,7 @@
 {
+  "greeting": {
+    "hello": "Привет, мир!"
+  },
   "settings":{
       "settings_lang":"Пожалуйста, выберите язык отображения (английский 'en' или русский 'ru'): ",
       "settings_username":"Пожалуйста, введите имя пользователя от https://dns.coopertino.ru:1500/: ",
